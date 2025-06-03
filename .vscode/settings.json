@@ -1,0 +1,7 @@
+{
+    "cody.autocomplete.languages": {
+        "*": false,
+    },
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 500
+}
