@@ -1,3 +1,4 @@
+const receitaContainer = document.querySelector('[data-name="receita"]');
 const tituloContainer = document.querySelector('[data-name="titulo"]');
 const ingredientesContainer = document.querySelector('[data-name="ingredientes"]');
 const receitasContainer = document.querySelector('[data-name="receitas"]');
@@ -69,12 +70,18 @@ async function mostrarReceita(receitaId = null) {
         modoDePreparoContainer.appendChild(element);
     });
 
+    if (receitaContainer) {
+        receitaContainer.style.display = 'block';
+    }
+
     window.scrollTo(0, 0, { behavior: 'smooth' });
 }
 
 document.addEventListener('DOMContentLoaded', async (event) => {
     receitasContainer.innerHTML = '';
     let _receitas = await apiReceitas.todasAsReceitas();
+    _receitas = Array.isArray(_receitas) ? _receitas : [];
+
     _receitas?.forEach(receita => {
         const element = document.createElement('li');
 
@@ -93,5 +100,12 @@ document.addEventListener('DOMContentLoaded', async (event) => {
 
             mostrarReceita(receitaId);
         })
-    })
+    });
+
+    const randomIndex = Math.floor(Math.random() * _receitas.length);
+    let randomReceitaId = (_receitas[randomIndex] || {})?.id;
+
+    if (randomReceitaId) {
+        mostrarReceita(randomReceitaId);
+    }
 });
